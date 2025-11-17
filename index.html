@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <title>ふぁすもー | 日本人向けファスモ外部ツール</title>
+  <title>ふぁすもー | 日本人向け Phasmo 外部ツール</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     :root {
@@ -36,7 +36,7 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     header h1 {
       font-size: 20px;
@@ -49,7 +49,7 @@
       color: var(--text-muted);
     }
     .section-label {
-      margin: 4px 2px 2px;
+      margin: 6px 2px 2px;
       font-size: 11px;
       color: var(--text-muted);
       display: flex;
@@ -95,6 +95,93 @@
       color: var(--danger);
       transform: translateY(1px);
     }
+    .difficulty-toggle {
+      display: inline-flex;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border-soft);
+    }
+    .difficulty-toggle button {
+      border: none;
+      padding: 3px 10px;
+      font-size: 11px;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .difficulty-toggle button.active {
+      background: rgba(40,70,110,0.9);
+      color: var(--text-main);
+    }
+
+    .tool-card {
+      margin-top: 8px;
+      padding: 10px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      background: radial-gradient(circle at top left, #1b2334 0, #070a12 55%, #05070a 100%);
+      box-shadow: var(--shadow-soft);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .tool-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+    .tool-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin: 4px 0;
+    }
+    .tool-row label {
+      font-size: 11px;
+    }
+    .tool-btn {
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      background: rgba(10,12,18,0.9);
+      color: var(--text-main);
+      padding: 4px 10px;
+      font-size: 11px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .tool-btn.active {
+      border-color: var(--accent);
+      background: rgba(40,70,110,0.95);
+    }
+    .tool-display {
+      font-size: 11px;
+      color: var(--text-main);
+    }
+    .tool-display span.small {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-left: 4px;
+    }
+
+    .timer-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 4px 0;
+      font-size: 11px;
+    }
+    .timer-label {
+      min-width: 90px;
+    }
+    .timer-time {
+      font-variant-numeric: tabular-nums;
+      font-size: 13px;
+      color: var(--text-main);
+      min-width: 56px;
+      text-align: right;
+    }
+
     .ghost-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -102,14 +189,10 @@
       margin-top: 10px;
     }
     @media (min-width: 720px) {
-      .ghost-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      .ghost-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (min-width: 1024px) {
-      .ghost-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
+      .ghost-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
     .ghost-card {
       background: linear-gradient(145deg, rgba(18,23,35,0.96), rgba(7,10,18,0.97));
@@ -214,24 +297,6 @@
       margin: 0;
       line-height: 1.3;
     }
-    .difficulty-toggle {
-      display: inline-flex;
-      border-radius: 999px;
-      overflow: hidden;
-      border: 1px solid var(--border-soft);
-    }
-    .difficulty-toggle button {
-      border: none;
-      padding: 3px 10px;
-      font-size: 11px;
-      background: transparent;
-      color: var(--text-muted);
-      cursor: pointer;
-    }
-    .difficulty-toggle button.active {
-      background: rgba(40,70,110,0.9);
-      color: var(--text-main);
-    }
     footer {
       margin-top: 14px;
       font-size: 10px;
@@ -244,10 +309,10 @@
 <body>
   <div class="app-shell">
     <header>
-      <h1>UP- <span style="opacity:.6;font-size:11px;">日本人向け Phasmo 外部ツール</span></h1>
-      <p>証拠 / 速度 / ハントSAN / 0証拠テストでゴースト候補を高速絞り込み。</p>
+      <h1>ふぁすもー <span style="opacity:.6;font-size:11px;">日本人向け Phasmo 外部ツール</span></h1>
+      <p>証拠 / タグ / 速度感 / ハントSAN / 足音 / タイマー で一括管理。</p>
       <div class="section-label">
-        <span>難易度</span>
+        <span>難易度（今は表示のみ）</span>
         <div class="difficulty-toggle" id="difficultyToggle">
           <button data-diff="standard" class="active">標準</button>
           <button data-diff="nightmare">Nightmare</button>
@@ -256,6 +321,75 @@
       </div>
     </header>
 
+    <!-- 足音・速度ツール -->
+    <div class="section-label">
+      <span>足音・速度ツール</span>
+      <span class="right">速度感覚 / Rounded表記チェック</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-title">ゴースト足音の速度イメージ</div>
+
+      <div class="tool-row">
+        <label>速度プリセット:</label>
+        <button class="tool-btn" data-speed="50">50%</button>
+        <button class="tool-btn" data-speed="75">75%</button>
+        <button class="tool-btn" data-speed="100">100%</button>
+        <button class="tool-btn" data-speed="125">125%</button>
+        <button class="tool-btn" data-speed="150">150%</button>
+      </div>
+
+      <div class="tool-row">
+        <label>カスタム速度 (%):</label>
+        <input id="speedSlider" type="range" min="50" max="150" value="100" step="1" style="flex:1;" />
+      </div>
+
+      <div class="tool-row">
+        <div class="tool-display" id="speedDisplay">
+          実測: 100% <span class="small">(丸め: 100%)</span>
+        </div>
+      </div>
+
+      <div class="tool-row">
+        <button class="tool-btn" id="stepPlay">▶ 足音再生</button>
+        <button class="tool-btn" id="stepStop">■ 停止</button>
+        <span class="small" style="opacity:.8;">※足音風クリック音で間隔だけ確認する用</span>
+      </div>
+    </div>
+
+    <!-- タイマー -->
+    <div class="section-label">
+      <span>タイマー</span>
+      <span class="right">スマッジ / クールダウン / ハント</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-title">簡易タイマー（秒）</div>
+
+      <div class="timer-row" data-duration="90">
+        <div class="timer-label">スマッジ 90s</div>
+        <div class="timer-time" data-role="time">01:30</div>
+        <button class="tool-btn" data-role="start">▶</button>
+        <button class="tool-btn" data-role="stop">■</button>
+        <button class="tool-btn" data-role="reset">↺</button>
+      </div>
+
+      <div class="timer-row" data-duration="180">
+        <div class="timer-label">スマッジ 180s</div>
+        <div class="timer-time" data-role="time">03:00</div>
+        <button class="tool-btn" data-role="start">▶</button>
+        <button class="tool-btn" data-role="stop">■</button>
+        <button class="tool-btn" data-role="reset">↺</button>
+      </div>
+
+      <div class="timer-row" data-duration="20">
+        <div class="timer-label">ハント目安 20s</div>
+        <div class="timer-time" data-role="time">00:20</div>
+        <button class="tool-btn" data-role="start">▶</button>
+        <button class="tool-btn" data-role="stop">■</button>
+        <button class="tool-btn" data-role="reset">↺</button>
+      </div>
+    </div>
+
+    <!-- 証拠・タグフィルタ -->
     <div class="section-label">
       <span>証拠フィルタ</span>
       <span class="right">タップで「必要 → 排除 → 解除」</span>
@@ -268,15 +402,17 @@
     </div>
     <div class="pill-row" id="tagRow"></div>
 
+    <!-- ゴースト一覧 -->
     <div class="ghost-grid" id="ghostGrid"></div>
 
     <footer>
-      主専用ビルド / ブラウザだけで動作（オフライン可）。<br/>
-      フィルタ状態はリロードでリセットされます。
+      ふぁすもー / 主専用ビルド。ブラウザだけで動作（オフライン可）。<br/>
+      情報は自己検証用メモとして利用してください。
     </footer>
   </div>
 
   <script>
+    // ===== ゴーストデータ =====
     const GHOSTS = [
       {
         id: "spirit",
@@ -707,6 +843,7 @@
       "SAN呪い","高速化","位置把握","時間で弱体化","超受け身","低SANハント"
     ];
 
+    // ===== 証拠・タグフィルタ =====
     const evidenceFilter = {};
     const activeTags = new Set();
     let currentDifficulty = "standard";
@@ -778,7 +915,7 @@
         const hasAny = ghost.tags.some(t => activeTags.has(t));
         if (!hasAny) return false;
       }
-      // 難易度別ロジックは後で追加も可
+      // 難易度フィルタは今は未実装（後から追加も可）
       return true;
     }
 
@@ -869,14 +1006,172 @@
           wrap.querySelectorAll("button").forEach(b => b.classList.remove("active"));
           btn.classList.add("active");
           currentDifficulty = btn.dataset.diff;
+          // 難易度別ロジック入れるならここで
           renderGhosts();
         });
       });
     }
 
+    // ===== 足音・速度ツール =====
+    const speedSlider = document.getElementById("speedSlider");
+    const speedDisplay = document.getElementById("speedDisplay");
+    const stepPlayBtn = document.getElementById("stepPlay");
+    const stepStopBtn = document.getElementById("stepStop");
+    const presetBtns = document.querySelectorAll(".tool-btn[data-speed]");
+
+    const BASE_INTERVAL_MS = 500; // 100% = 0.5秒間隔くらい（基準）
+
+    let audioCtx = null;
+    let stepTimerId = null;
+    let currentPercent = 100;
+
+    function roundedPercent(p) {
+      const buckets = [50, 75, 100, 125, 150];
+      let best = buckets[0];
+      let diff = Math.abs(p - best);
+      for (const b of buckets) {
+        const d = Math.abs(p - b);
+        if (d < diff) {
+          diff = d;
+          best = b;
+        }
+      }
+      return best;
+    }
+
+    function updateSpeedDisplay() {
+      const p = currentPercent;
+      const r = roundedPercent(p);
+      speedDisplay.innerHTML =
+        `実測: ${p.toFixed(0)}% <span class="small">(丸め: ${r}%)</span>`;
+    }
+
+    function playClick() {
+      if (!audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.frequency.value = 800;
+      gain.gain.value = 0.2;
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      const now = audioCtx.currentTime;
+      osc.start(now);
+      osc.stop(now + 0.04);
+    }
+
+    function startSteps() {
+      stopSteps();
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      const interval = BASE_INTERVAL_MS * (100 / currentPercent);
+      playClick();
+      stepTimerId = setInterval(playClick, interval);
+    }
+
+    function stopSteps() {
+      if (stepTimerId) {
+        clearInterval(stepTimerId);
+        stepTimerId = null;
+      }
+    }
+
+    speedSlider.addEventListener("input", () => {
+      currentPercent = parseFloat(speedSlider.value);
+      updateSpeedDisplay();
+      if (stepTimerId) startSteps();
+    });
+
+    presetBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const p = parseFloat(btn.dataset.speed);
+        currentPercent = p;
+        speedSlider.value = p;
+        presetBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        updateSpeedDisplay();
+        if (stepTimerId) startSteps();
+      });
+    });
+
+    stepPlayBtn.addEventListener("click", () => {
+      presetBtns.forEach(b => {
+        if (parseFloat(b.dataset.speed) === currentPercent) {
+          b.classList.add("active");
+        }
+      });
+      startSteps();
+    });
+
+    stepStopBtn.addEventListener("click", () => {
+      stopSteps();
+      presetBtns.forEach(b => b.classList.remove("active"));
+    });
+
+    // ===== タイマー =====
+    const timerRows = document.querySelectorAll(".timer-row");
+    const timerState = new Map(); // row -> {remaining, original, id}
+
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+    }
+
+    timerRows.forEach(row => {
+      const dur = parseInt(row.dataset.duration, 10);
+      const timeEl = row.querySelector('[data-role="time"]');
+      const startBtn = row.querySelector('[data-role="start"]');
+      const stopBtn = row.querySelector('[data-role="stop"]');
+      const resetBtn = row.querySelector('[data-role="reset"]');
+
+      timerState.set(row, { remaining: dur, original: dur, id: null });
+      timeEl.textContent = formatTime(dur);
+
+      startBtn.addEventListener("click", () => {
+        const st = timerState.get(row);
+        if (st.id) return;
+        if (!audioCtx) {
+          // ここで初期化すると、初回再生で音許可も兼ねる
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        st.id = setInterval(() => {
+          st.remaining -= 1;
+          if (st.remaining <= 0) {
+            st.remaining = 0;
+            clearInterval(st.id);
+            st.id = null;
+            // 終了時に軽くクリック音
+            playClick();
+          }
+          timeEl.textContent = formatTime(st.remaining);
+        }, 1000);
+      });
+
+      stopBtn.addEventListener("click", () => {
+        const st = timerState.get(row);
+        if (st.id) {
+          clearInterval(st.id);
+          st.id = null;
+        }
+      });
+
+      resetBtn.addEventListener("click", () => {
+        const st = timerState.get(row);
+        if (st.id) {
+          clearInterval(st.id);
+          st.id = null;
+        }
+        st.remaining = st.original;
+        timeEl.textContent = formatTime(st.remaining);
+      });
+    });
+
+    // ===== 初期化 =====
     renderFilters();
     initDifficultyToggle();
     renderGhosts();
+    updateSpeedDisplay();
   </script>
 </body>
 </html>
