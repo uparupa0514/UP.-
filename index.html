@@ -504,4 +504,379 @@
         speeds: { base: "~1.7 m/s", detail: "DOTS専用挙動あり。" },
         abilities: [
           "DOTSは基本的に“カメラ越し＋同室に人がいない”時のみ見える。",
-          "ローム範囲が狭め。あまり部屋を変え
+          "ローム範囲が狭め。あまり部屋を変えない。"
+        ],
+        tests: [
+          "同室だとDOTSが見えず、三脚カメラ越しだと安定して映る → Goryo本命。",
+          "ゴーストルームからあまり動かないかを見る。"
+        ],
+        tags: ["DOTS専用挙動", "強制証拠", "ローム少ない"]
+      },
+      {
+        id: "myling",
+        name: "Myling",
+        evidences: ["EMF Lv5", "ゴーストライティング", "指紋"],
+        forcedEvidences: [],
+        huntSanity: { base: 50, note: "標準。" },
+        speeds: { base: "~1.7 m/s", detail: "ハント中の足音が小さい。" },
+        abilities: [
+          "パラボラマイクでの声・音が出やすい。",
+          "ハント中の足音が他ゴーストより静か。"
+        ],
+        tests: [
+          "パラボラで頻繁にノイズ／声を拾う。",
+          "ハント中、かなり近づかないと足音が聞こえにくい → Myling候補。"
+        ],
+        tags: ["静音足音", "パラボラ頻度"]
+      },
+      {
+        id: "onryo",
+        name: "Onryo",
+        evidences: ["スピボ", "ゴーストオーブ", "氷点下温度"],
+        forcedEvidences: [],
+        huntSanity: { base: 60, note: "火（ロウソク）が絡むと挙動変化。" },
+        speeds: { base: "~1.7 m/s", detail: "速度標準。炎を嫌う。" },
+        abilities: [
+          "ロウソク / 焚き火などの“炎”でハントを抑制。",
+          "炎が3回消えると、それをトリガーにハントを起こしやすい。"
+        ],
+        tests: [
+          "ロウソクを部屋に多く置いた状態だとハントが極端に減る → Onryo疑い。",
+          "炎が消えた直後にだけハントが来るかを見る。"
+        ],
+        tags: ["炎トリガー", "早ハント"]
+      },
+      {
+        id: "the_twins",
+        name: "The Twins",
+        evidences: ["EMF Lv5", "スピボ", "氷点下温度"],
+        forcedEvidences: [],
+        huntSanity: { base: 50, note: "標準。2体分の干渉。" },
+        speeds: { base: "1.5 / 1.9 m/s", detail: "本体と分身で速度が違う。" },
+        abilities: [
+          "“本体”と“もう1体”が別々に干渉。離れた場所で同時に干渉が起こりやすい。",
+          "ハント時の移動速度が2パターンある。"
+        ],
+        tests: [
+          "全く違う場所でほぼ同時に干渉が起こる → Twins候補。",
+          "複数回ハントの足音速度を比べて、速い／遅いが混ざっていないか確認。"
+        ],
+        tags: ["二箇所干渉", "速度2パターン"]
+      },
+      {
+        id: "raiju",
+        name: "Raiju",
+        evidences: ["EMF Lv5", "DOTS", "ゴーストオーブ"],
+        forcedEvidences: [],
+        huntSanity: { base: 65, note: "電子機器周りで早ハント＆高速。" },
+        speeds: { base: "〜2.8 m/s", detail: "近くに電子機器が多いと大幅加速。" },
+        abilities: [
+          "近くに点いている電子機器が多いほど速度アップ。",
+          "機器を遠距離からでも妨害（EMPっぽい挙動）しやすい。"
+        ],
+        tests: [
+          "電子機器を周囲に置いた状態でハントさせると露骨に速い → Raiju濃厚。",
+          "機器を全部OFFにして速度が普通に戻るか確認。"
+        ],
+        tags: ["電子機器加速", "高SANハント"]
+      },
+      {
+        id: "obake",
+        name: "Obake",
+        evidences: ["EMF Lv5", "ゴーストオーブ", "指紋"],
+        forcedEvidences: ["指紋"],
+        huntSanity: { base: 50, note: "標準。指紋が特殊＆消えやすい。" },
+        speeds: { base: "~1.7 m/s", detail: "速度標準。指紋・モデル変化が特徴。" },
+        abilities: [
+          "指紋が出ない判定が25%あり、そもそも付かないことが多い。",
+          "6本指・二重ライトスイッチなど、レア指紋パターンが存在。",
+          "ハント中の点滅でゴーストモデルが別の姿に変わることがある。"
+        ],
+        tests: [
+          "指紋が付いた場所で明らかに変な形（6本指／二重スイッチ）ならObakeほぼ確。",
+          "指紋の消えるタイミングが他より早いことがある。",
+          "長めのハントで点滅ごとにモデルがコロコロ変わるか観察。"
+        ],
+        tags: ["レア指紋", "指紋消失", "モデル変化", "強制証拠"]
+      },
+      {
+        id: "mimic",
+        name: "The Mimic",
+        evidences: ["スピボ", "氷点下温度", "指紋＋ゴーストオーブ"],
+        forcedEvidences: ["ゴーストオーブ"],
+        huntSanity: { base: 50, note: "模倣先ゴーストに依存。" },
+        speeds: { base: "可変", detail: "模倣しているゴーストの挙動に依存。" },
+        abilities: [
+          "他の任意のゴーストの挙動・能力を模倣する。",
+          "常に“偽オーブ”を伴う（4証拠持ち）。"
+        ],
+        tests: [
+          "証拠3つ出ているのにオーブがセットと噛み合わない → Mimic疑い。",
+          "挙動・速度・ハント閾値がコロコロ変わるように感じる場合も要注意。"
+        ],
+        tags: ["オーブ確定", "挙動ランダム", "4証拠"]
+      },
+      {
+        id: "moroi",
+        name: "Moroi",
+        evidences: ["スピボ", "ゴーストライティング", "氷点下温度"],
+        forcedEvidences: ["スピボ"],
+        huntSanity: { base: 50, note: "呪いでSAN減少を加速。" },
+        speeds: { base: "〜2.5 m/s", detail: "呪われたプレイヤーのSANが低いほど高速化。" },
+        abilities: [
+          "スピボ応答 or パラボラ囁きで対象プレイヤーを“呪い”、SAN減少を加速させる。",
+          "呪われたプレイヤーがいると、低SAN時にゲーム最速クラスの速度になる。"
+        ],
+        tests: [
+          "スピボ応答後、明らかにSANの減りが早い → Moroi候補。",
+          "終盤ハントが異常に速くなり、しかもスマッジの足止め時間が長い。"
+        ],
+        tags: ["SAN呪い", "高速化", "強制証拠"]
+      },
+      {
+        id: "deogen",
+        name: "Deogen",
+        evidences: ["スピボ", "ゴーストライティング", "DOTS"],
+        forcedEvidences: ["スピボ"],
+        huntSanity: { base: 40, note: "やや遅めハント開始。" },
+        speeds: { base: "3.0 / 0.4 m/s", detail: "遠距離で爆速、近づくと超鈍足。" },
+        abilities: [
+          "常にプレイヤー位置を正確に把握し、隠れても見つかる。",
+          "距離依存速度：離れていると速く、至近距離だと歩いて追いつかないほど遅い。",
+          "スピボで独特の荒い息・いびきのような応答が出る。"
+        ],
+        tests: [
+          "ハント中にあえて足元をぐるぐる回っても絶対に追いつかれない → Deogenほぼ確。",
+          "スピボで“息荒い”専用ボイスが出たらDeogen濃厚。"
+        ],
+        tags: ["距離依存速度", "位置把握", "強制証拠"]
+      },
+      {
+        id: "thaye",
+        name: "Thaye",
+        evidences: ["ゴーストライティング", "ゴーストオーブ", "DOTS"],
+        forcedEvidences: [],
+        huntSanity: { base: 75, note: "序盤75%からハント。時間経過で弱体化。" },
+        speeds: { base: "2.75→1.0 m/s", detail: "近くにいる時間が長いほど速度・ハント閾値が下がる。" },
+        abilities: [
+          "プレイヤーが近くにいる時間に応じて“老化”し、活動・速度・ハントSANが段階的に低下。",
+          "序盤は最凶クラス、終盤は雑魚化する。"
+        ],
+        tests: [
+          "開幕すぐ高SANでハント→ その後どんどん大人しく遅くなる → Thaye本命。",
+          "同じ部屋に長時間居座って、ハント間隔・速度の変化を見る。"
+        ],
+        tags: ["早ハント", "時間で弱体化"]
+      },
+      {
+        id: "shade",
+        name: "Shade",
+        evidences: ["EMF Lv5", "ゴーストライティング", "氷点下温度"],
+        forcedEvidences: [],
+        huntSanity: { base: 35, note: "プレイヤー近くではほぼハントしない。" },
+        speeds: { base: "~1.7 m/s", detail: "速度標準。極端に消極的。" },
+        abilities: [
+          "プレイヤーが近くにいるとイベント・ハントをほぼ起こさない。",
+          "活動量が全体的に低く、“つまらないゴースト”になりがち。"
+        ],
+        tests: [
+          "ずっと同室に居てもイベントほぼ無し＆ハントも来ない → Shade濃厚。",
+          "部屋から離れたタイミングでだけハント・イベントが増えるか確認。"
+        ],
+        tags: ["超受け身", "低SANハント"]
+      }
+    ];
+
+    const ALL_EVIDENCES = [
+      "EMF Lv5",
+      "スピボ",
+      "ゴーストライティング",
+      "DOTS",
+      "ゴーストオーブ",
+      "氷点下温度",
+      "指紋"
+    ];
+
+    const ALL_TAGS = [
+      "標準","スマッジ延長","テレポート","塩NG","写真消失","SAN大ダメ","視認性低",
+      "投擲多い","SANダメ","単体ターゲット","パラボラ悲鳴","遠距離加速","ブレーカー依存",
+      "暗闇強化","早ハント","ライト嫌い","LOS爆速","非LOS激遅","高活動","エアボール無し",
+      "声トリガー","高SANハント","温度依存速度","強制証拠","DOTS専用挙動","ローム少ない",
+      "静音足音","パラボラ頻度","炎トリガー","二箇所干渉","速度2パターン",
+      "電子機器加速","レア指紋","指紋消失","モデル変化","オーブ確定","挙動ランダム","4証拠",
+      "SAN呪い","高速化","位置把握","時間で弱体化","超受け身","低SANハント"
+    ];
+
+    const evidenceFilter = {};
+    const activeTags = new Set();
+    let currentDifficulty = "standard";
+
+    ALL_EVIDENCES.forEach(ev => evidenceFilter[ev] = null);
+
+    const evidenceRow = document.getElementById("evidenceRow");
+    const tagRow = document.getElementById("tagRow");
+    const ghostGrid = document.getElementById("ghostGrid");
+
+    function applyEvidencePillStyle(el, state) {
+      el.classList.remove("active-include", "active-exclude");
+      if (state === "include") el.classList.add("active-include");
+      else if (state === "exclude") el.classList.add("active-exclude");
+    }
+
+    function renderFilters() {
+      evidenceRow.innerHTML = "";
+      ALL_EVIDENCES.forEach(ev => {
+        const pill = document.createElement("button");
+        pill.className = "pill";
+        pill.textContent = ev;
+        pill.dataset.ev = ev;
+        applyEvidencePillStyle(pill, evidenceFilter[ev]);
+        pill.addEventListener("click", () => {
+          const cur = evidenceFilter[ev];
+          let next = null;
+          if (cur === null) next = "include";
+          else if (cur === "include") next = "exclude";
+          else next = null;
+          evidenceFilter[ev] = next;
+          applyEvidencePillStyle(pill, next);
+          renderGhosts();
+        });
+        evidenceRow.appendChild(pill);
+      });
+
+      tagRow.innerHTML = "";
+      ALL_TAGS.forEach(tag => {
+        const pill = document.createElement("button");
+        pill.className = "pill";
+        pill.textContent = tag;
+        pill.dataset.tag = tag;
+        if (activeTags.has(tag)) pill.classList.add("active-include");
+        pill.addEventListener("click", () => {
+          if (activeTags.has(tag)) activeTags.delete(tag);
+          else activeTags.add(tag);
+          pill.classList.toggle("active-include");
+          renderGhosts();
+        });
+        tagRow.appendChild(pill);
+      });
+    }
+
+    function ghostMatchesFilters(ghost) {
+      const includeList = [];
+      const excludeList = [];
+      for (const ev of ALL_EVIDENCES) {
+        if (evidenceFilter[ev] === "include") includeList.push(ev);
+        if (evidenceFilter[ev] === "exclude") excludeList.push(ev);
+      }
+      for (const ev of includeList) {
+        if (!ghost.evidences.includes(ev)) return false;
+      }
+      for (const ev of excludeList) {
+        if (ghost.evidences.includes(ev)) return false;
+      }
+      if (activeTags.size > 0) {
+        const hasAny = ghost.tags.some(t => activeTags.has(t));
+        if (!hasAny) return false;
+      }
+      // 難易度別ロジックは後で追加も可
+      return true;
+    }
+
+    function renderGhosts() {
+      ghostGrid.innerHTML = "";
+      GHOSTS.forEach(g => {
+        const visible = ghostMatchesFilters(g);
+        const card = document.createElement("article");
+        card.className = "ghost-card";
+        if (!visible) card.classList.add("hidden");
+
+        const header = document.createElement("div");
+        header.className = "ghost-header";
+        const nameEl = document.createElement("div");
+        nameEl.className = "ghost-name";
+        nameEl.textContent = g.name;
+        const meta = document.createElement("div");
+        meta.className = "ghost-meta";
+        meta.innerHTML = `
+          <div>ハントSAN: <strong>${g.huntSanity.base}%</strong></div>
+          <div style="font-size:10px;">${g.huntSanity.note || ""}</div>
+        `;
+        header.appendChild(nameEl);
+        header.appendChild(meta);
+
+        const evRow = document.createElement("div");
+        evRow.className = "evidence-row";
+        g.evidences.forEach(ev => {
+          const chip = document.createElement("div");
+          chip.className = "evidence-chip";
+          chip.textContent = ev;
+          if (g.forcedEvidences.includes(ev)) {
+            chip.classList.add("forced");
+            const b = document.createElement("span");
+            b.className = "badge";
+            b.textContent = "Forced";
+            chip.appendChild(b);
+          }
+          evRow.appendChild(chip);
+        });
+
+        const speedRow = document.createElement("div");
+        speedRow.className = "row";
+        const left = document.createElement("div");
+        left.innerHTML = `<strong>速度</strong> ${g.speeds.base}`;
+        const right = document.createElement("div");
+        right.textContent = g.speeds.detail;
+        right.style.textAlign = "right";
+        speedRow.appendChild(left);
+        speedRow.appendChild(right);
+
+        const tagRowDiv = document.createElement("div");
+        tagRowDiv.className = "tags-row";
+        g.tags.forEach(tag => {
+          const chip = document.createElement("span");
+          chip.className = "tag-chip";
+          chip.textContent = tag;
+          tagRowDiv.appendChild(chip);
+        });
+
+        const tests = document.createElement("div");
+        tests.className = "tests";
+        const abilTitle = document.createElement("div");
+        abilTitle.textContent = "固有能力・0証拠テスト";
+        const ul = document.createElement("ul");
+        [...g.abilities, ...g.tests].forEach(t => {
+          const li = document.createElement("li");
+          li.textContent = t;
+          ul.appendChild(li);
+        });
+        tests.appendChild(abilTitle);
+        tests.appendChild(ul);
+
+        card.appendChild(header);
+        card.appendChild(evRow);
+        card.appendChild(speedRow);
+        card.appendChild(tagRowDiv);
+        card.appendChild(tests);
+
+        ghostGrid.appendChild(card);
+      });
+    }
+
+    function initDifficultyToggle() {
+      const wrap = document.getElementById("difficultyToggle");
+      wrap.querySelectorAll("button").forEach(btn => {
+        btn.addEventListener("click", () => {
+          wrap.querySelectorAll("button").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          currentDifficulty = btn.dataset.diff;
+          renderGhosts();
+        });
+      });
+    }
+
+    renderFilters();
+    initDifficultyToggle();
+    renderGhosts();
+  </script>
+</body>
+</html>
